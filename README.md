@@ -8,7 +8,7 @@ Self-hosted static site + SPA hosting, with built-in comments and analytics, ser
 
 - **Server**: Rust + axum + tokio + sqlx (SQLite) — `crates/gapes-server`
 - **CLI**: Rust + clap — `crates/gapes-cli`, ships as binary `gapes`
-- **UI**: askama templates + HTMX + Alpine.js, no build step
+- **UI**: askama templates + Alpine.js, no build step
 - **Storage**: disk + SQLite in Phase 1; pluggable to S3 + Postgres in Phase 5
 - **TLS**: Caddy in front (separate process)
 
@@ -23,7 +23,7 @@ crates/
 └── gapes-sdk/          API client library               (Apache-2.0)
 ui/
 ├── templates/          askama templates
-├── public/             htmx, alpine, css, fonts
+├── public/             alpine, css, fonts
 └── widget/             comments widget (vanilla JS)
 ```
 
