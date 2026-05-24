@@ -78,6 +78,7 @@ The binary is `gapes`. Every command auto-rotates your refresh token and only re
 | `gapes stats <uuid> [--range 7d]`      | ASCII analytics — views, uniques, top paths, referrers. |
 | `gapes share <uuid> --public`          | Flip visibility. `--public` requires step-up.           |
 | `gapes share <uuid> --password secret` | Password-gate it.                                       |
+| `gapes share <uuid> --csp off`         | Per-page CSP knob. Use `strict` (default) or `off` to let pages load CDN assets. Also accepted on `gapes deploy`. |
 | `gapes rm <uuid>`                      | Delete. Always step-up — opens a QR for browser confirm. |
 | `gapes devices [revoke <id>]`          | List or revoke logged-in devices.                       |
 | `gapes activity --range 7d`            | Recent audit events.                                    |
@@ -260,7 +261,7 @@ Defaults work out of the box for local dev (`127.0.0.1:8080`, SQLite under `./da
 ## Security
 
 - TLS is the proxy's job — `gapes-server` listens HTTP only and refuses non-loopback in `--dev`.
-- Default response headers: strict CSP on hosted pages, `nosniff`, conservative `Permissions-Policy`, no `Server` header.
+- Default response headers: strict CSP on hosted pages, `nosniff`, conservative `Permissions-Policy`, no `Server` header. The default CSP can be opted out per-page (`--csp off` on deploy/share) for sites that legitimately load CDN assets — those pages then declare their own policy via `<meta http-equiv>`.
 - Passwords: argon2id (64 MiB, t=3, p=1). Tokens: HMAC, hashed at rest, rotated on every use.
 - Uploads: path-traversal blocked, symlinks rejected, exec bit dropped, 100 MB cap, zip-bomb guarded.
 - Destructive ops always require a fresh second-device confirmation (QR or URL).
